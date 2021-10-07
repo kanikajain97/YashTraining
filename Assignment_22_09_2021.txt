@@ -1,0 +1,246 @@
+public class CountPrimeNumbers {
+
+	public int getCount(int[] inputArr) 
+	{
+		int count =0;
+		if(inputArr.length == 0) {
+			throw new RuntimeException("Array Length cannot be zero");
+		}
+		for (int i = 0; i < inputArr.length; i++) {
+			if(isPrime(inputArr[i])) {
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
+	boolean isPrime(int number) 
+	{
+		int flag=0;
+		if(number == 1 || number == 0) 
+		{
+			return false;
+		}
+		
+		for(int i=2; i <= Math.sqrt(number) ; i++) 
+		{
+			if(number%i == 0) 
+			{
+				flag=1;
+				break;
+			}
+		}
+		
+		if(flag == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+
+test -
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.yash.service.CountPrimeNumbers;
+
+public class TestCountPrimeNumbers {
+
+	private CountPrimeNumbers countPrimeNumbers;
+
+	@Before
+	public void setUp() throws Exception {
+		countPrimeNumbers = new CountPrimeNumbers();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		countPrimeNumbers=null;
+	}
+
+	@Test
+	public void testCountPrime_positive() 
+	{
+		int[] inputArr= {1,2,4,3,21,33,4,13,17};
+		int expected = 4;
+		int actual = countPrimeNumbers.getCount(inputArr);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testCountPrime_negative() {
+		int[] inputArr= {};
+		try {
+		countPrimeNumbers.getCount(inputArr);
+		assertTrue(false);
+		}
+		catch(RuntimeException e) {
+			assertTrue(true);
+			System.err.println(e.getMessage());
+		}
+	}
+
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.HashSet;
+import java.util.Set;
+
+public class DuplicateElements 
+{
+	public int getDuplicateCount(String[] inputArr) {
+		int count=0;
+		if(inputArr.length==1 || inputArr.length==0) {
+			return count;
+		}
+		Set<String> set=new HashSet<>();
+		for (String string : inputArr) {
+			boolean add = set.add(string);
+			if(add==false) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
+}
+
+
+test-
+
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.yash.service.DuplicateElements;
+
+public class TestDuplicateElements {
+	
+
+	private DuplicateElements duplicateStringElements;
+
+	@Before
+	public void setUp() throws Exception {
+		duplicateStringElements = new DuplicateStringElements();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		duplicateStringElements=null;
+	}
+
+	@Test
+	public void testCountDuplicateStrings_positive() 
+	{
+		String[] inputArr= {"Hello","Hi","Hello","Welcome","new","Welcome","rtr","ddf","rtr","Hi"};
+		int expected = 4;
+		int actual = duplicateStringElements.getDuplicateCount(inputArr);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testCountDuplicateStrings_negative() 
+	{
+		String[] inputArr = {"Hello"};
+		int expected = 0;
+		int actual = duplicateStringElements.getDuplicateCount(inputArr);
+		assertEquals(expected, actual);
+	}
+	
+
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+import java.util.Arrays;
+
+public class FourthLargestElement {
+
+	public int getFourthLargest(int[] inputArr, int index) {
+		try {
+			if (index > inputArr.length) {
+				throw new NegativeArraySizeException("Index value cannot be negative");
+			}
+			if (inputArr.length < index) {
+				return 0;
+			}
+			Arrays.sort(inputArr);
+			return inputArr[inputArr.length - index];
+		} catch (NegativeArraySizeException e) {
+			e.getMessage();
+		}
+		return 0;
+	}
+
+}
+
+
+test -
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.yash.service.FourthLargestElement;
+
+public class TestFourthLargestElement {
+
+	private FourthLargestElement element;
+
+	@Before
+	public void setUp() throws Exception {
+		element = new ArrayFourthLargestElement();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		element=null;
+	}
+
+	@Test
+	public void testArray_NthLargestElementPositive() {
+		int inputArr[]= {20,32,2,43,45,23};
+		int expected = 23;
+		int index=4;
+		int actual = element.getFourthLargest(inputArr,index);
+		assertEquals(expected, actual);
+	}
+	
+	@Test
+	public void testArray_NthLargestElementNegative() {
+		int inputArr[]= {2,5,3};
+		int index=4;
+		try {
+			element.getFourthLargest(inputArr, index);
+			assertTrue(true);
+		}
+		catch(Exception e) {
+			System.err.println(e);
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testArray_ExceptionWhen_Nth_ValueIsGreaterThanSize() {
+		int inputArr[]= {2,5,3,4,3,32,23,2,32,42,323};
+		int index=inputArr.length+1;;
+		element.getFourthLargest(inputArr, index);
+		assertTrue(true);
+	}
+
+}
+
+
+	
